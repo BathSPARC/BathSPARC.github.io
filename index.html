@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bath SPARC — Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mist:      #F2F4F3;   /* page background        */
+    --grid:      #DDE4E2;   /* monitor grid lines     */
+    --ink:       #14201E;   /* deep pine-black text   */
+    --ink-soft:  #5C6B68;   /* secondary text         */
+    --signal:    #0E8A6E;   /* live trace / accent    */
+    --signal-dim:#BFDCD4;   /* trace afterglow        */
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html,body{ height:100%; }
+
+  body{
+    font-family:"Archivo",system-ui,sans-serif;
+    background:var(--mist);
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+    /* faint monitor / graph-paper grid */
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:48px 48px;
+  }
+
+  /* ---------- top bar ---------- */
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding:28px clamp(24px,5vw,64px);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  header .brand{ color:var(--ink); font-weight:500; }
+
+  /* ---------- hero ---------- */
+  main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:0 clamp(24px,5vw,64px);
+    position:relative;
+  }
+
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--signal);
+    margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--signal);
+    animation:blip 1.4s ease-in-out infinite;
+  }
+  @keyframes blip{ 0%,100%{opacity:1} 50%{opacity:.25} }
+
+  h1{
+    font-variation-settings:"wdth" 110;
+    font-weight:800;
+    font-size:clamp(3.2rem,11vw,9rem);
+    line-height:.95;
+    letter-spacing:-.02em;
+    text-transform:uppercase;
+    max-width:12ch;
+  }
+  h1 .accent{ color:var(--signal); }
+
+  .sub{
+    margin-top:28px;
+    max-width:46ch;
+    font-size:clamp(1rem,1.4vw,1.15rem);
+    line-height:1.6;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- live trace (signature element) ---------- */
+  .trace{
+    position:absolute;
+    left:0; right:0;
+    bottom:clamp(-30px,-3vw,-10px);
+    width:100%;
+    height:clamp(90px,14vw,180px);
+    pointer-events:none;
+    overflow:visible;
+  }
+  .trace path{
+    fill:none;
+    stroke-width:2.5;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .trace .ghost{ stroke:var(--signal-dim); }
+  .trace .live{
+    stroke:var(--signal);
+    stroke-dasharray:340 2400;
+    animation:sweep 5.5s linear infinite;
+  }
+  @keyframes sweep{
+    from{ stroke-dashoffset:2740; }
+    to  { stroke-dashoffset:0; }
+  }
+
+  /* ---------- notify ---------- */
+  .notify{
+    margin-top:48px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    max-width:480px;
+    position:relative;
+    z-index:1;
+  }
+  .notify input{
+    flex:1 1 240px;
+    font:inherit;
+    font-size:.95rem;
+    padding:14px 16px;
+    border:1.5px solid var(--ink);
+    border-radius:6px;
+    background:#fff;
+    color:var(--ink);
+  }
+  .notify input::placeholder{ color:var(--ink-soft); }
+  .notify button{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.85rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:14px 22px;
+    border:1.5px solid var(--ink);
+    border-radius:6px;
+    background:var(--ink);
+    color:var(--mist);
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  .notify button:hover{ background:var(--signal); border-color:var(--signal); }
+  .notify input:focus-visible,
+  .notify button:focus-visible{
+    outline:3px solid var(--signal);
+    outline-offset:2px;
+  }
+  .notify .msg{
+    flex-basis:100%;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.8rem;
+    color:var(--signal);
+    min-height:1.2em;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+    padding:24px clamp(24px,5vw,64px) 32px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;
+    letter-spacing:.06em;
+    color:var(--ink-soft);
+  }
+  footer a{ color:var(--ink); text-decoration:none; border-bottom:1px solid var(--signal); }
+  footer a:hover{ color:var(--signal); }
+  #readout{ font-variant-numeric:tabular-nums; }
+
+  /* ---------- motion & small screens ---------- */
+  @media (prefers-reduced-motion:reduce){
+    .trace .live{ animation:none; stroke-dasharray:none; }
+    .eyebrow::before{ animation:none; }
+  }
+  @media (max-width:560px){
+    header{ padding-top:20px; }
+    .trace{ bottom:-8px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="brand">Bath&nbsp;SPARC</span>
+  <span>Est.&nbsp;2026</span>
+</header>
+
+<main>
+  <p class="eyebrow" id="status" aria-live="polite">Signal acquiring &mdash; 00:00:00</p>
+
+  <h1>Coming <span class="accent">soon</span></h1>
+
+  <p class="sub">
+    Something new is taking shape here. We're heads-down building it &mdash;
+    leave your email and we'll let you know the moment it goes live.
+  </p>
+
+  <div class="notify">
+    <input type="email" id="email" placeholder="you@example.com"
+           aria-label="Email address" autocomplete="email">
+    <button type="button" id="notifyBtn">Notify me</button>
+    <span class="msg" id="msg" aria-live="polite"></span>
+  </div>
+
+  <!-- signature element: live pulse trace sweeping the viewport -->
+  <svg class="trace" viewBox="0 0 1400 160" preserveAspectRatio="none" aria-hidden="true">
+    <path class="ghost" d="M0,110 H160 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H340 H500 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H680 H840 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H1020 H1180 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H1400"/>
+    <path class="live"  d="M0,110 H160 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H340 H500 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H680 H840 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H1020 H1180 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H1400"/>
+  </svg>
+</main>
+
+<footer>
+  <span id="readout">UPTIME 00:00:00</span>
+  <span><a href="mailto:hello@example.com">hello@example.com</a></span>
+</footer>
+
+<script>
+  // Elapsed-time readout: the page "acquiring a signal" while you wait.
+  const status  = document.getElementById('status');
+  const readout = document.getElementById('readout');
+  const t0 = Date.now();
+  const pad = n => String(n).padStart(2,'0');
+
+  function tick(){
+    const s = Math.floor((Date.now() - t0) / 1000);
+    const stamp = pad(Math.floor(s/3600)) + ':' + pad(Math.floor(s/60)%60) + ':' + pad(s%60);
+    status.textContent  = 'Signal acquiring \u2014 ' + stamp;
+    readout.textContent = 'UPTIME ' + stamp;
+  }
+  tick();
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduced) setInterval(tick, 1000);
+
+  // Notify form (front-end only — wire the handler to your mailing list).
+  document.getElementById('notifyBtn').addEventListener('click', () => {
+    const email = document.getElementById('email').value.trim();
+    const msg = document.getElementById('msg');
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    msg.textContent = valid
+      ? '\u2713 Noted \u2014 we\u2019ll be in touch.'
+      : 'Please enter a valid email address.';
+  });
+</script>
+
+</body>
+</html>
