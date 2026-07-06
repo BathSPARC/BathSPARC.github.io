@@ -3,267 +3,463 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bath SPARC — Coming Soon</title>
+<title>Bath SPARC — axSpA Research Consortium</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --mist:      #F2F4F3;   /* page background        */
-    --grid:      #DDE4E2;   /* monitor grid lines     */
-    --ink:       #14201E;   /* deep pine-black text   */
-    --ink-soft:  #5C6B68;   /* secondary text         */
-    --signal:    #0E8A6E;   /* live trace / accent    */
-    --signal-dim:#BFDCD4;   /* trace afterglow        */
+    --navy:      #17212C;
+    --navy-2:    #26374A;
+    --paper:     #F5F2EA;
+    --paper-2:   #EBE6D9;
+    --line:      #D9D3C2;
+    --teal:      #2F6F62;
+    --teal-dark: #1E4A41;
+    --gold:      #B8863B;
+    --text:      #1C2530;
+    --text-soft: #57646E;
+    --white:     #FFFFFF;
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
-
-  html,body{ height:100%; }
-
+  html{ scroll-behavior:smooth; }
   body{
-    font-family:"Archivo",system-ui,sans-serif;
-    background:var(--mist);
-    color:var(--ink);
-    display:flex;
-    flex-direction:column;
-    min-height:100vh;
-    /* faint monitor / graph-paper grid */
-    background-image:
-      linear-gradient(var(--grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size:48px 48px;
+    font-family:"Public Sans",system-ui,sans-serif;
+    color:var(--text);
+    background:var(--paper);
+    line-height:1.6;
   }
-
-  /* ---------- top bar ---------- */
-  header{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    padding:28px clamp(24px,5vw,64px);
-    font-family:"IBM Plex Mono",monospace;
-    font-size:12px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
-  }
-  header .brand{ color:var(--ink); font-weight:500; }
-
-  /* ---------- hero ---------- */
-  main{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    padding:0 clamp(24px,5vw,64px);
-    position:relative;
-  }
-
+  h1,h2,h3{ font-family:"Source Serif 4",Georgia,serif; font-weight:600; letter-spacing:-.01em; }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 clamp(20px,5vw,48px); }
   .eyebrow{
     font-family:"IBM Plex Mono",monospace;
     font-size:12px;
-    letter-spacing:.14em;
+    letter-spacing:.12em;
     text-transform:uppercase;
-    color:var(--signal);
-    margin-bottom:20px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-  .eyebrow::before{
-    content:"";
-    width:9px; height:9px;
-    border-radius:50%;
-    background:var(--signal);
-    animation:blip 1.4s ease-in-out infinite;
-  }
-  @keyframes blip{ 0%,100%{opacity:1} 50%{opacity:.25} }
-
-  h1{
-    font-variation-settings:"wdth" 110;
-    font-weight:800;
-    font-size:clamp(3.2rem,11vw,9rem);
-    line-height:.95;
-    letter-spacing:-.02em;
-    text-transform:uppercase;
-    max-width:12ch;
-  }
-  h1 .accent{ color:var(--signal); }
-
-  .sub{
-    margin-top:28px;
-    max-width:46ch;
-    font-size:clamp(1rem,1.4vw,1.15rem);
-    line-height:1.6;
-    color:var(--ink-soft);
   }
 
-  /* ---------- live trace (signature element) ---------- */
-  .trace{
-    position:absolute;
-    left:0; right:0;
-    bottom:clamp(-30px,-3vw,-10px);
-    width:100%;
-    height:clamp(90px,14vw,180px);
-    pointer-events:none;
-    overflow:visible;
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky; top:0; z-index:10;
+    background:var(--navy);
+    border-bottom:1px solid rgba(255,255,255,.08);
   }
-  .trace path{
-    fill:none;
-    stroke-width:2.5;
-    stroke-linecap:round;
-    stroke-linejoin:round;
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:14px; padding-bottom:14px;
   }
-  .trace .ghost{ stroke:var(--signal-dim); }
-  .trace .live{
-    stroke:var(--signal);
-    stroke-dasharray:340 2400;
-    animation:sweep 5.5s linear infinite;
+  .nav-brand{ display:flex; align-items:center; gap:10px; }
+  .nav-brand img{ height:28px; width:auto; }
+  .nav-brand span{ color:var(--white); font-family:"Source Serif 4",serif; font-weight:600; font-size:1.05rem; }
+  .nav-links{ display:flex; gap:28px; list-style:none; }
+  .nav-links a{
+    color:#C7D0D8; text-decoration:none;
+    font-size:.9rem; font-weight:500;
+    transition:color .15s ease;
   }
-  @keyframes sweep{
-    from{ stroke-dashoffset:2740; }
-    to  { stroke-dashoffset:0; }
-  }
+  .nav-links a:hover, .nav-links a:focus-visible{ color:var(--white); }
+  .nav-toggle{ display:none; }
 
-  /* ---------- notify ---------- */
-  .notify{
-    margin-top:48px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-    max-width:480px;
+  /* ---------- hero ---------- */
+  header.hero{
+    background:var(--navy);
+    color:var(--white);
+    padding:64px 0 0;
     position:relative;
-    z-index:1;
+    overflow:hidden;
   }
-  .notify input{
-    flex:1 1 240px;
-    font:inherit;
-    font-size:.95rem;
-    padding:14px 16px;
-    border:1.5px solid var(--ink);
-    border-radius:6px;
-    background:#fff;
-    color:var(--ink);
+  .hero-inner{
+    display:flex; flex-direction:column; align-items:flex-start;
+    gap:22px; max-width:680px;
   }
-  .notify input::placeholder{ color:var(--ink-soft); }
-  .notify button{
-    font-family:"IBM Plex Mono",monospace;
-    font-size:.85rem;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    padding:14px 22px;
-    border:1.5px solid var(--ink);
-    border-radius:6px;
-    background:var(--ink);
-    color:var(--mist);
-    cursor:pointer;
-    transition:background .15s ease, color .15s ease;
+  .hero-inner img.mark{ height:96px; width:auto; margin-bottom:10px; }
+  .hero .eyebrow{ color:var(--gold); }
+  header.hero h1{
+    font-size:clamp(2.1rem,4.6vw,3.2rem);
+    line-height:1.15;
+    color:var(--white);
   }
-  .notify button:hover{ background:var(--signal); border-color:var(--signal); }
-  .notify input:focus-visible,
-  .notify button:focus-visible{
-    outline:3px solid var(--signal);
-    outline-offset:2px;
+  header.hero p.lede{
+    font-size:1.05rem;
+    color:#C7D0D8;
+    max-width:56ch;
   }
-  .notify .msg{
-    flex-basis:100%;
-    font-family:"IBM Plex Mono",monospace;
-    font-size:.8rem;
-    color:var(--signal);
-    min-height:1.2em;
+
+  /* spine divider: vertebral column silhouette, doubles as section transition */
+  .spine{ display:block; width:100%; height:auto; margin-top:44px; }
+  .spine .vert{ fill:var(--navy-2); }
+  .spine .cord{ stroke:var(--gold); stroke-width:2; fill:none; opacity:.9; }
+
+  /* ---------- section scaffolding ---------- */
+  section{ padding:76px 0; }
+  section.alt{ background:var(--paper-2); }
+  .section-head{ max-width:640px; margin-bottom:40px; }
+  .section-head .eyebrow{ color:var(--teal-dark); margin-bottom:10px; display:block; }
+  .section-head h2{ font-size:clamp(1.6rem,3vw,2.1rem); color:var(--text); }
+  .section-head p{ color:var(--text-soft); margin-top:12px; }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid; grid-template-columns:1.3fr 1fr; gap:48px;
+    align-items:start;
+  }
+  #about p{ color:var(--text-soft); margin-bottom:14px; max-width:60ch; }
+  #about p:first-child{ color:var(--text); font-size:1.08rem; }
+  .about-figure{
+    border:1px solid var(--line); border-radius:12px;
+    overflow:hidden; background:var(--white);
+  }
+  .about-figure img{ width:100%; height:280px; object-fit:cover; object-position:center 30%; }
+  .about-figure figcaption{
+    font-family:"IBM Plex Mono",monospace; font-size:11px;
+    letter-spacing:.04em; color:var(--text-soft);
+    padding:12px 16px; border-top:1px solid var(--line);
+  }
+
+  /* ---------- research cards ---------- */
+  .research-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:28px;
+  }
+  .card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:26px 28px;
+  }
+  .card h3{ font-size:1.1rem; color:var(--text); margin-bottom:10px; line-height:1.3; }
+  .card p{ color:var(--text-soft); font-size:.94rem; }
+  .card.wide{ grid-column:1 / -1; }
+
+  /* ---------- team ---------- */
+  .team-groups{ display:flex; flex-direction:column; gap:44px; }
+  .team-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
+    background:var(--line); border:1px solid var(--line); border-radius:10px;
+    overflow:hidden;
+  }
+  .person{
+    background:var(--white); padding:20px 22px;
+  }
+  .person .name{ font-weight:600; font-size:.98rem; }
+  .person .role{ color:var(--text-soft); font-size:.85rem; margin-top:4px; }
+  .person .org{ color:var(--text-soft); font-size:.8rem; margin-top:2px; }
+  .person .org a{ color:inherit; text-decoration:underline; text-decoration-color:var(--line); }
+  .person .org a:hover{ color:var(--teal-dark); text-decoration-color:var(--teal); }
+  .person a.mail{
+    display:inline-block; margin-top:10px;
+    font-family:"IBM Plex Mono",monospace; font-size:.75rem;
+    color:var(--teal-dark); text-decoration:none;
+    border-bottom:1px solid var(--teal);
+  }
+  .person a.mail:hover{ color:var(--teal); }
+  .group-label{
+    font-family:"IBM Plex Mono",monospace; font-size:12px;
+    letter-spacing:.1em; text-transform:uppercase;
+    color:var(--text-soft); margin-bottom:14px; display:block;
   }
 
   /* ---------- footer ---------- */
   footer{
-    display:flex;
-    justify-content:space-between;
+    background:var(--navy); color:#8FA0AC;
+    padding:44px 0;
+  }
+  footer .wrap{
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px;
     align-items:center;
-    gap:16px;
-    flex-wrap:wrap;
-    padding:24px clamp(24px,5vw,64px) 32px;
-    font-family:"IBM Plex Mono",monospace;
-    font-size:12px;
-    letter-spacing:.06em;
-    color:var(--ink-soft);
   }
-  footer a{ color:var(--ink); text-decoration:none; border-bottom:1px solid var(--signal); }
-  footer a:hover{ color:var(--signal); }
-  #readout{ font-variant-numeric:tabular-nums; }
+  footer .brand-line{ display:flex; align-items:center; gap:10px; }
+  footer .brand-line img{ height:20px; width:auto; opacity:.9; }
+  footer .brand-line span{ color:var(--white); font-family:"Source Serif 4",serif; font-size:.95rem; }
+  footer nav.foot-links{ display:flex; gap:22px; }
+  footer nav.foot-links a{ color:#8FA0AC; text-decoration:none; font-size:.85rem; }
+  footer nav.foot-links a:hover{ color:var(--white); }
+  footer .fine{ font-size:.78rem; width:100%; margin-top:24px; color:#5F707B; }
 
-  /* ---------- motion & small screens ---------- */
-  @media (prefers-reduced-motion:reduce){
-    .trace .live{ animation:none; stroke-dasharray:none; }
-    .eyebrow::before{ animation:none; }
+  a:focus-visible, button:focus-visible{
+    outline:3px solid var(--gold); outline-offset:2px;
   }
-  @media (max-width:560px){
-    header{ padding-top:20px; }
-    .trace{ bottom:-8px; }
+
+  @media (max-width:760px){
+    .nav-links{ display:none; }
+    .about-grid{ grid-template-columns:1fr; }
+    .research-grid{ grid-template-columns:1fr; }
+    .team-grid{ grid-template-columns:1fr; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <span class="brand">Bath&nbsp;SPARC</span>
-  <span>Est.&nbsp;2026</span>
-</header>
+<nav>
+  <div class="wrap">
+    <div class="nav-brand">
+      <img src="sparc-logo.png" alt="Bath SPARC">
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
 
-<main>
-  <p class="eyebrow" id="status" aria-live="polite">Signal acquiring &mdash; 00:00:00</p>
-
-  <h1>Coming <span class="accent">soon</span></h1>
-
-  <p class="sub">
-    Something new is taking shape here. We're heads-down building it &mdash;
-    leave your email and we'll let you know the moment it goes live.
-  </p>
-
-  <div class="notify">
-    <input type="email" id="email" placeholder="you@example.com"
-           aria-label="Email address" autocomplete="email">
-    <button type="button" id="notifyBtn">Notify me</button>
-    <span class="msg" id="msg" aria-live="polite"></span>
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-inner">
+      <img class="mark" src="sparc-logo.png" alt="Bath SPARC logo">
+      <p class="eyebrow">University of Bath · Royal United Hospitals Bath (RNHRD)</p>
+      <h1>Understanding axial spondyloarthritis, from the clinic to the data.</h1>
+      <p class="lede">Bath SPARC is a collaboration between researchers in health, computer science, and psychology, working alongside clinicians to study axial spondyloarthritis (axSpA) — improving diagnosis, treatment, and day-to-day self-management through clinical and digital health research.</p>
+    </div>
   </div>
 
-  <!-- signature element: live pulse trace sweeping the viewport -->
-  <svg class="trace" viewBox="0 0 1400 160" preserveAspectRatio="none" aria-hidden="true">
-    <path class="ghost" d="M0,110 H160 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H340 H500 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H680 H840 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H1020 H1180 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H1400"/>
-    <path class="live"  d="M0,110 H160 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H340 H500 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H680 H840 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H1020 H1180 l14,-10 12,20 10,-70 12,86 10,-40 8,14 H1400"/>
+  <svg class="spine" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path class="cord" d="M0,60 C 180,30 260,90 360,60 S 540,30 660,60 S 840,90 960,60 S 1140,30 1260,60 S 1400,80 1440,60"/>
+    <g class="vert">
+      <ellipse cx="120" cy="52" rx="16" ry="11"/>
+      <ellipse cx="240" cy="80" rx="16" ry="11"/>
+      <ellipse cx="360" cy="60" rx="16" ry="11"/>
+      <ellipse cx="480" cy="34" rx="16" ry="11"/>
+      <ellipse cx="600" cy="52" rx="16" ry="11"/>
+      <ellipse cx="720" cy="78" rx="16" ry="11"/>
+      <ellipse cx="840" cy="60" rx="16" ry="11"/>
+      <ellipse cx="960" cy="34" rx="16" ry="11"/>
+      <ellipse cx="1080" cy="52" rx="16" ry="11"/>
+      <ellipse cx="1200" cy="78" rx="16" ry="11"/>
+      <ellipse cx="1320" cy="58" rx="16" ry="11"/>
+    </g>
+    <rect x="0" y="106" width="1440" height="14" fill="var(--paper)" style="fill:#F5F2EA"/>
   </svg>
-</main>
+</header>
 
-<footer>
-  <span id="readout">UPTIME 00:00:00</span>
-  <span><a href="mailto:hello@example.com">hello@example.com</a></span>
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <span class="eyebrow" style="color:var(--teal-dark); display:block; margin-bottom:14px;">About the consortium</span>
+      <p>Living with axSpA means managing a condition that changes from one day to the next — and much of that day-to-day experience never makes it into a clinic appointment. Bath SPARC exists to close that gap.</p>
+      <p>The consortium pairs long-running clinical research — biobanking, biomarkers, and rehabilitation studies — with computational and digital health approaches, from smartphone symptom tracking to biomechanical modelling of the spine. The aim throughout is practical: better diagnosis, better-targeted treatment, and tools that help people manage axSpA on their own terms.</p>
+      <p>Bath SPARC is a partnership between the Royal National Hospital for Rheumatic Diseases (RNHRD) at the Royal United Hospitals Bath and the University of Bath.</p>
+    </div>
+    <figure class="about-figure">
+      <img src="spine.jpg" alt="A 19th-century anatomical print showing a lateral view of the spine, resting on a clipboard.">
+      <figcaption>Fig. 22 — Lateral view of the spine</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="research" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Research</span>
+      <h2>Research projects</h2>
+      <p>From biobanking and biomarkers to spinal biomechanics and app-based self-management — each project looks at a different facet of axSpA.</p>
+    </div>
+    <div class="research-grid">
+      <div class="card wide">
+        <h3>The Bath Spondyloarthritis (SpA) Biobank</h3>
+        <p>A database storing routine clinical information for consenting patients with axSpA, used to investigate which genetic, clinical, or biological factors influence disease severity and treatment outcomes. Clinical assessments, questionnaires, and blood biomarkers are all held within the biobank to improve diagnosis, severity assessment, and treatment response.</p>
+      </div>
+      <div class="card">
+        <h3>The Sir Halley Stewart Trust Project</h3>
+        <p>Reviewing the evidence base for digital self-management interventions in rheumatic and musculoskeletal disease, alongside routine-care data on whether the Project Nightingale app affects outcomes, self-efficacy, exercise motivation, or medication adherence.</p>
+      </div>
+      <div class="card">
+        <h3>Spinal joint forces &amp; disease progression</h3>
+        <p>Using 3D ultrasound to build patient-specific virtual spinal models, estimating vertebral joint forces and muscle contributions to movement, and comparing them against X-ray and mSASSS progression data.</p>
+      </div>
+      <div class="card">
+        <h3>PaxSpA — Physiotherapy in Axial Spondyloarthritis</h3>
+        <p>Identifying the most effective non-pharmacological therapies at different stages of axSpA, and their impact on disease activity, spinal mobility, and function.</p>
+      </div>
+      <div class="card">
+        <h3>Project Nightingale</h3>
+        <p>A self-management study using the uMotif app to track pain, fatigue, sleep, stress, and exercise day to day — supporting research such as predicting flares, and working toward personalised axSpA management.</p>
+      </div>
+      <div class="card">
+        <h3>PROMISE — Prognostic markers in axSpA</h3>
+        <p>A cross-sectional study of serum biomarkers in axSpA, mechanical back pain, and healthy controls, exploring their role in diagnosis, prognosis, and treatment monitoring.</p>
+      </div>
+      <div class="card">
+        <h3>COMPASS</h3>
+        <p>Two linked projects examining what remission looks like in axSpA, and how the RNHRD's two-week AS rehabilitation course affects the natural progression of the disease.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" style="color:var(--teal-dark);">Team</span>
+      <h2>Consortium members</h2>
+      <p>Clinicians, physiotherapists, and researchers across rheumatology, health, computer science, and pharmacy.</p>
+    </div>
+
+    <div class="team-groups">
+      <div>
+        <span class="group-label">Lead</span>
+        <div class="team-grid">
+          <div class="person">
+            <div class="name">Prof Raj Sengupta</div>
+            <div class="role">Consultant Rheumatologist</div>
+            <div class="org">Royal United Hospitals Bath (RNHRD)</div>
+            <a class="mail" href="mailto:rajsengupta@nhs.net">rajsengupta@nhs.net</a>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="group-label">Hospital &amp; clinical</span>
+        <div class="team-grid">
+          <div class="person">
+            <div class="name">Dr Ben Davies</div>
+            <div class="role">Advanced Practice Physiotherapist, Rheumatology</div>
+            <div class="org">Royal United Hospitals Bath (RNHRD)</div>
+            <a class="mail" href="mailto:ben.davies7@nhs.net">ben.davies7@nhs.net</a>
+          </div>
+          <div class="person">
+            <div class="name">Dr Elizabeth Reilly</div>
+            <div class="role">Consultant Rheumatologist</div>
+            <div class="org">University Hospitals Bristol NHS Foundation Trust</div>
+            <a class="mail" href="mailto:elizabethreilly2@nhs.net">elizabethreilly2@nhs.net</a>
+          </div>
+          <div class="person">
+            <div class="name">Dr Thomas Williams</div>
+            <div class="role">Consultant Rheumatologist</div>
+            <div class="org">Royal United Hospitals Bath (RNHRD)</div>
+            <a class="mail" href="mailto:thomas.williams5@nhs.net">thomas.williams5@nhs.net</a>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="group-label">Academic staff</span>
+        <div class="team-grid">
+          <div class="person">
+            <div class="name">Prof Jason Alexander</div>
+            <div class="role">Professor</div>
+            <div class="org">Dept of Computer Science, University of Bath</div>
+            <a class="mail" href="mailto:jma73@bath.ac.uk">jma73@bath.ac.uk</a>
+          </div>
+          <div class="person">
+            <div class="name">Dr Dario Cazzola</div>
+            <div class="role">Reader</div>
+            <div class="org">Dept for Health, University of Bath</div>
+            <a class="mail" href="mailto:dc547@bath.ac.uk">dc547@bath.ac.uk</a>
+          </div>
+          <div class="person">
+            <div class="name">Dr Christopher Clarke</div>
+            <div class="role">Senior Lecturer</div>
+            <div class="org">Dept of Computer Science, University of Bath</div>
+            <a class="mail" href="mailto:cjc234@bath.ac.uk">cjc234@bath.ac.uk</a>
+          </div>
+          <div class="person">
+            <div class="name">Dr Anita McGrogan</div>
+            <div class="role">Senior Lecturer</div>
+            <div class="org">Dept of Pharmacy &amp; Pharmacology, University of Bath</div>
+            <a class="mail" href="mailto:am399@bath.ac.uk">am399@bath.ac.uk</a>
+          </div>
+          <div class="person">
+            <div class="name">Dr Pete Rouse</div>
+            <div class="role">Senior Lecturer</div>
+            <div class="org">Dept for Health, University of Bath</div>
+            <a class="mail" href="mailto:pr222@bath.ac.uk">pr222@bath.ac.uk</a>
+          </div>
+          <div class="person">
+            <div class="name">Dr Logan Wade</div>
+            <div class="role">Senior Lecturer</div>
+            <div class="org"><a href="https://scholar.google.com/citations?view_op=view_org&amp;hl=en&amp;org=4274056836244091944" target="_blank" rel="noopener">University of New South Wales</a></div>
+            <a class="mail" href="mailto:logan.wade@unsw.edu.au">logan.wade@unsw.edu.au</a>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="group-label">Postdoctoral researchers</span>
+        <div class="team-grid">
+          <div class="person">
+            <div class="name">Matthew Wragg</div>
+            <div class="role">Postdoctoral Researcher, Computing</div>
+            <div class="org">University of Bristol</div>
+            <a class="mail" href="mailto:matthew.wragg@bristol.ac.uk">matthew.wragg@bristol.ac.uk</a>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="group-label">PhD &amp; doctoral researchers</span>
+        <div class="team-grid">
+          <div class="person">
+            <div class="name">Rosie Barnett</div>
+            <div class="role">PhD Researcher, Health</div>
+            <div class="org">Dept for Health, University of Bath</div>
+            <a class="mail" href="mailto:rlb60@bath.ac.uk">rlb60@bath.ac.uk</a>
+          </div>
+          <div class="person">
+            <div class="name">Alaa Kattan</div>
+            <div class="role">PhD Researcher</div>
+            <div class="org">Dept for Health, University of Bath</div>
+            <a class="mail" href="mailto:ak2870@bath.ac.uk">ak2870@bath.ac.uk</a>
+          </div>
+          <div class="person">
+            <div class="name">Greg Knowles</div>
+            <div class="role">PhD Researcher, ART-AI CDT</div>
+            <div class="org">Dept of Computer Science, University of Bath</div>
+            <a class="mail" href="mailto:grk24@bath.ac.uk">grk24@bath.ac.uk</a>
+          </div>
+          <div class="person">
+            <div class="name">Korn Pavavongsak</div>
+            <div class="role">PhD Researcher, Health</div>
+            <div class="org">Dept for Health, University of Bath</div>
+            <a class="mail" href="mailto:kp2028@bath.ac.uk">kp2028@bath.ac.uk</a>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="group-label">Alumni</span>
+        <div class="team-grid">
+          <div class="person">
+            <div class="name">Dr Thomas Ingram</div>
+            <div class="role">Research Associate, Health</div>
+            <div class="org">Dept for Health, University of Bath</div>
+            <a class="mail" href="mailto:tai23@bath.ac.uk">tai23@bath.ac.uk</a>
+          </div>
+          <div class="person">
+            <div class="name">Dr Violet Henderson</div>
+            <div class="role">PhD Researcher, Computing</div>
+            <div class="org">Dept of Computer Science, University of Bath</div>
+            <a class="mail" href="mailto:thh37@bath.ac.uk">thh37@bath.ac.uk</a>
+          </div>
+          <div class="person">
+            <div class="name">Dr Romy Schwäbe</div>
+            <div class="role">Musculoskeletal Physiotherapist &amp; Professional Doctorate Researcher</div>
+            <div class="org">Dept for Health, University of Bath</div>
+            <a class="mail" href="mailto:rs2276@bath.ac.uk">rs2276@bath.ac.uk</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="brand-line">
+      <img src="sparc-logo.png" alt="">
+      <span>Bath SPARC</span>
+    </div>
+    <nav class="foot-links">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#team">Team</a>
+    </nav>
+    <p class="fine">Bath SPARC is a research consortium of the Royal United Hospitals Bath (RNHRD) and the University of Bath. For project-specific enquiries, please contact the relevant team member above.</p>
+  </div>
 </footer>
-
-<script>
-  // Elapsed-time readout: the page "acquiring a signal" while you wait.
-  const status  = document.getElementById('status');
-  const readout = document.getElementById('readout');
-  const t0 = Date.now();
-  const pad = n => String(n).padStart(2,'0');
-
-  function tick(){
-    const s = Math.floor((Date.now() - t0) / 1000);
-    const stamp = pad(Math.floor(s/3600)) + ':' + pad(Math.floor(s/60)%60) + ':' + pad(s%60);
-    status.textContent  = 'Signal acquiring \u2014 ' + stamp;
-    readout.textContent = 'UPTIME ' + stamp;
-  }
-  tick();
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduced) setInterval(tick, 1000);
-
-  // Notify form (front-end only — wire the handler to your mailing list).
-  document.getElementById('notifyBtn').addEventListener('click', () => {
-    const email = document.getElementById('email').value.trim();
-    const msg = document.getElementById('msg');
-    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    msg.textContent = valid
-      ? '\u2713 Noted \u2014 we\u2019ll be in touch.'
-      : 'Please enter a valid email address.';
-  });
-</script>
 
 </body>
 </html>
